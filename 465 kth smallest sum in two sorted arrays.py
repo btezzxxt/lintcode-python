@@ -33,6 +33,10 @@ class Solution:
                 next_B_index = cur_pair[1] + dy[j]
                 if next_A_index < len1 and next_B_index < len2 and not (next_A_index, next_B_index) in dic:
                     heappush(minheap, (A[next_A_index]+B[next_B_index], (next_A_index, next_B_index)))
+                    dic[(next_A_index, next_B_index)] = True
             i += 1
 
         return minheap[0][0]
+
+
+print(Solution().kthSmallestSum([1,7,11], [2,4,6], 8))

@@ -50,7 +50,7 @@
 # O(nlog(n)) logn for binary search 
 # end
 
-# O(n)
+# O(n) sort O(nlogn)
 class Solution:
     """
     @param nums: an array of integer

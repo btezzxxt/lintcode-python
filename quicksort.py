@@ -1,7 +1,8 @@
 from random import randint
 
 def patition(arr, l, r):
-    r_index = randint(l, r)
+    # pick a random index or the median of first, last and middle will lower average time complexity for edge cases
+    r_index = randint(l, r) 
     arr[l], arr[r_index] = arr[r_index], arr[l]
     pivot = arr[l]    
     while l < r:

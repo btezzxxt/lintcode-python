@@ -14,7 +14,7 @@ class UnionFind:
         root_a = self.find(a)
         root_b = self.find(b)
         if root_a != root_b:
-            self.__father[a] = root_b
+            self.__father[root_a] = root_b
 
 uf = UnionFind([1,2,3,4,5,6])
 uf.union(1,6)

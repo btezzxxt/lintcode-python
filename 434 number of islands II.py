@@ -70,7 +70,7 @@ class Solution:
             for j in range(4):
                 new_x = point.x + dx[j]
                 new_y = point.y + dy[j]
-                if new_x >= 0 and new_x < n and new_y >= 0 and new_y <= m:
+                if new_x >= 0 and new_x < n and new_y >= 0 and new_y < m:
                     unionFind.union(pid, self.getId(new_x, new_y, bigger))
                 res[i] = unionFind.query()
         return res

@@ -1,1 +1,1 @@
-print( True and 1)
+print({"value": "abc"})

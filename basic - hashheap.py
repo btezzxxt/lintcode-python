@@ -7,6 +7,7 @@ class HashHeap:
     def __init__(self):
         self.hash = {}
         self.heap = []
+        self.count = 0
     
     def push(self, val):
         if val not in self.hash:
@@ -17,6 +18,7 @@ class HashHeap:
         else:
             idx = self.hash[val]
             self.heap[idx].count += 1
+        self.count += 1
 
     def pop(self):
         node = self.heap[0]
@@ -27,6 +29,8 @@ class HashHeap:
             self.heap.pop()
             del self.hash[node.val]
             self._siftdown(0)
+        self.count -= 1
+        return node.val
     
     def delete(self, val):
         idx = self.hash[val]
@@ -37,10 +41,12 @@ class HashHeap:
             self._switch(idx, len(self.heap) - 1)
             self.heap.pop()
             del self.hash[val]
-            if self._validIdx(self._getParentId(idx)) and self.heap[self._getParentId(idx)].val > self.heap[idx].val:
-                self._siftup(idx)
-            else:
-                self._siftdown(idx)
+            if self._validIdx(idx):
+                if self._validIdx(self._getParentId(idx)) and self.heap[self._getParentId(idx)].val > self.heap[idx].val:
+                    self._siftup(idx)
+                else:
+                    self._siftdown(idx)
+        self.count -= 1
 
     def peek(self):
         return self.heap[0].val

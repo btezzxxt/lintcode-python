@@ -1,30 +1,25 @@
 from collections import deque
 class Solution:
-    """
-    @param nums: A list of integers.
-    @return: The maximum number inside the window at each moving.
-    """
     def maxSlidingWindow(self, nums, k):
         # write your code here
-        q = deque()
-        result = []
         if len(nums) < k or k == 0:
             return []
 
-        n = len(nums)
-        for i in range(n):
-            while len(q) and nums[q[-1]] < nums[i]:
-                q.pop()
-            q.append(i)
+        deq = deque()
+        for i in range(k):
+            while deq and deq[-1] < nums[i]:
+                deq.pop()
+            deq.append(i)
+        res = [nums[deq[0]]]
+        for i in range(k, len(nums)):
+            if i - k == deq[0]:
+                deq.popleft()
+            while deq and deq[-1] < nums[i]:
+                deq.pop()
+            deq.append(i)
+            res.append(nums[deq[0]])
 
-            if i < k - 1:                        
-                continue
+        return res
 
-            while len(q) and q[0] <= i - k:
-                q.popleft()
-            
-            result.append(nums[q[0]])
+print(Solution().maxSlidingWindow([10,3], 2))
 
-        return result
-
-print(Solution().maxSlidingWindow([1,2,7,7,8], 3))

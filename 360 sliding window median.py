@@ -37,9 +37,9 @@ class Solution:
 
         res = []
         for j in range(k):
-            addToHeap(maxHeap, minHeap, nums[j])
-        
+            addToHeap(maxHeap, minHeap, nums[j])       
         res.append(getMedian(maxHeap, minHeap, k))
+        
         for i in range(k, len(nums)):
             addToHeap(maxHeap, minHeap, nums[i])
             delFromHeap(maxHeap, minHeap, nums[i-k])

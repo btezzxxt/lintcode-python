@@ -3,4 +3,8 @@ a = re.match(r'\w+', 'a')
 if a:
     print(True)
 else:
-    print(False) 
+    print(False)
+
+
+diff = 1e-3
+print(diff)

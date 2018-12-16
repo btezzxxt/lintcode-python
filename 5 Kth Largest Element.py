@@ -6,30 +6,29 @@ class Solution:
     """
     def kthLargestElement(self, n, nums):
         # write your code here
-        # kth biggest is len(nums) - k smallest + 1
-        smallest = len(nums) - n + 1
+        # kth biggest is len(nums) - k index smallest
+        smallest = len(nums) - n
         return self.partition(nums, 0, len(nums) - 1, smallest)
     # get kth smallest
-    def partition(self, nums, l, r, k):
-        if l == r:
-            return nums[l]
+    def partition(self, nums, start, end, k):
+        if start == end:
+            return nums[k]
         
-        pivot = nums[l] 
-        while l < r:
-            while l < r and nums[r] > pivot:
+        l, r = start, end
+
+        pivot = nums[(l + r)//2] 
+        while l <= r:
+            while l <= r and nums[r] > pivot:
                 r = r - 1
-            nums[l] = nums[r]
-            while l < r and nums[l] < pivot:
+            while l <= r and nums[l] < pivot:
                 l = l + 1
-            nums[r] = nums[l]
-        nums[l] = pivot
-
-        # l is the pivot location, l + 1 is the kth smallest
-        if k == l + 1:
-            return nums[l]
-        elif k > l + 1:
-            return self.partition(nums, l + 1, len(nums) - 1, k)
-        else:
-            return self.partition(nums, 0, l - 1, k) 
-
-print(Solution().kthLargestElement(3, [9,3,2,4,8]))
+            if l <= r:
+                nums[l], nums[r] = nums[r], nums[l]
+                l = l + 1 
+                r = r - 1
+        
+        if k >= l:
+            return self.partition(nums, l, end, k)
+        elif k <= r:
+            return self.partition(nums, start, r, k) 
+        return nums[k]

@@ -6,9 +6,9 @@ class Solution:
     """
     def search(self, A, target):
         # write your code here
-        minValIdx = self.searchMinIndex(A)
-        idxA = self.binarySearch(A, 0, minValIdx - 1, target)
-        idxB = self.binarySearch(A, minValIdx, len(A) - 1, target)
+        min_valIdx = self.searchMinIndex(A)
+        idxA = self.binarySearch(A, 0, min_valIdx - 1, target)
+        idxB = self.binarySearch(A, min_valIdx, len(A) - 1, target)
         
         if idxA == -1 and idxB == -1:
             return -1

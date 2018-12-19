@@ -18,7 +18,7 @@ class Solution:
             return ""
         arr = []
         queue = deque([root])
-
+        
         while queue:
             cur = queue.popleft()
             if cur:

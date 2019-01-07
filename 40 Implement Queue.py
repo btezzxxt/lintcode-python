@@ -1,35 +1,43 @@
 class MyQueue:
-    
-    def __init__(self):
-        # do intialization if necessary
-        self.stack = []
-        self.helper = []
     """
     @param: element: An integer
     @return: nothing
     """
-    def push(self, element):
+    def __init__(self):
+        self.stack1 = []
+        self.stack2 = []
+
+    def push(self, x):
         # write your code here
-        self.stack.append(element)
+        self.stack1.append(x)
+
     """
-    @return: An integer
+    @return: nothing
     """
     def pop(self):
         # write your code here
-        if self.helper:
-            return self.helper.pop()
-        else:
-            while self.stack:
-                self.helper.append(self.stack.pop())
-            return self.helper.pop()
+        if not self.stack2:
+            self._shuffle()
+        return self.stack2.pop()
+                
+
     """
     @return: An integer
     """
     def top(self):
         # write your code here
-        if self.helper:
-            return self.helper[-1]
-        else:
-            while self.stack:
-                self.helper.append(self.stack.pop())
-            return self.helper[-1]
+        if not self.stack2:
+            self._shuffle()
+        return self.stack2[-1]
+    """
+    @return: True if the stack is empty
+    """
+    def isEmpty(self):
+        # write your code here
+        if not self.stack2:
+            self._shuffle()
+        return len(self.stack2) == 0
+
+    def _shuffle(self):
+        while self.stack1:
+            self.stack2.append(self.stack1.pop())

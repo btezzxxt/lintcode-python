@@ -3,6 +3,9 @@ class Solution:
     @param grid: a list of lists of integers
     @return: An integer, minimizes the sum of all numbers along its path
     """
+    
+
+
     # dfs + memo 解法， 超时
     def largestDivisibleSubset(self, grid):
         # write your code here

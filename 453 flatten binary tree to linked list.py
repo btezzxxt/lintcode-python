@@ -41,3 +41,37 @@ class Solution:
             node.left = None
             return right_last
 
+# 非递归 用栈， 先入右边 再压入左边 最后把root右边连上栈顶元素，左边清零
+# """
+# Definition of TreeNode:
+# class TreeNode:
+#     def __init__(self, val):
+#         self.val = val
+#         self.left, self.right = None, None
+# """
+
+# class Solution:
+#     """
+#     @param root: a TreeNode, the root of the binary tree
+#     @return: nothing
+#     """
+#     def flatten(self, root):
+#         if not root:
+#             return root
+        
+#         stack = [root]
+#         while stack:
+#             node = stack.pop()
+#             if node.right:
+#                 stack.append(node.right)
+            
+#             if node.left:
+#                 stack.append(node.left)
+                
+#             node.left = None
+#             if stack:
+#                 node.right = stack[-1]
+#             else:
+#                 node.right = None
+        
+

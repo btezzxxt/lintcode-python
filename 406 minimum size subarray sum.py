@@ -5,6 +5,7 @@ class Solution:
     @param s: An integer
     @return: an integer representing the minimum size of subarray
     """
+    # 双指针锁边 - 只求size 没有要求具体地址 所以可以用这种方法
     def minimumSize(self, nums, s):
         # write your code here
         i = 0

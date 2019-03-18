@@ -44,3 +44,33 @@ class Solution:
         return max_c
 
 print(Solution().lengthOfLongestSubstring("an++--viaj"))
+
+class Solution2:
+    """
+    @param s: a string
+    @return: an integer
+    """
+    def lengthOfLongestSubstring(self, s):
+        # write your code here
+        used = {}
+        i = 0
+        j = 0
+        count = 0
+        max_count = 0
+        while i < len(s):
+            if s[i]  in used:
+                while j < i and s[j] != s[i]:
+                    del used[s[j]]
+                    j += 1
+                    count -= 1
+                
+                if j != i:
+                    del used[s[j]]
+                    j += 1
+                    count -= 1
+                    
+            used[s[i]] = True
+            count += 1
+            max_count = max(count, max_count)
+            i += 1
+        return max_count

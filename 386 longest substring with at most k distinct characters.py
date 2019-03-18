@@ -29,3 +29,41 @@ class Solution:
                 else:
                     del map[c2]
         return max_c
+
+class Solution2:
+    """
+    @param s: A string
+    @param k: An integer
+    @return: An integer
+    """
+    def lengthOfLongestSubstringKDistinct(self, s: int, k: int) -> int:
+        # write your code here
+        if k == 0:
+            return 0
+
+        used = {}
+        i = 0
+        j = 0
+        count = 0
+        maxcount = 0
+        while i < len(s):
+            if s[i] not in used:
+                if len(used) >= k:
+                    # remove one item from used
+                    while j < i:
+                        if used[s[j]] == 1:
+                            del used[s[j]]
+                            count -= 1
+                            j += 1
+                            break
+                        else:
+                            used[s[j]] -= 1
+                            count -= 1
+                            j += 1
+            used[s[i]] = 1
+            count += 1
+            i += 1
+            maxcount = max(count, maxcount)
+        return maxcount
+
+

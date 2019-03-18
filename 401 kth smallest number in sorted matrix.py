@@ -6,6 +6,7 @@ class Solution:
     @param k: An integer
     @return: the kth smallest number in the matrix
     """
+    # 一道经典heapq题
     def kthSmallest(self, matrix, k):
         # write your code here
         dx = [0,1]

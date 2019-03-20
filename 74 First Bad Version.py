@@ -35,3 +35,29 @@ class Solution:
         return r
 
 print(Solution().findFirstBadVersion(31))
+
+class Solution2:
+    """
+    @param: n: An integer
+    @return: An integer which is the first bad version.
+    """
+    def findFirstBadVersion(self, n):
+        l = 1 
+        r = n 
+        while l + 1 < r:
+            m = (l + r) // 2
+            if self.search_left(m):
+                r = m 
+            else:
+                l = m 
+        
+        if SVNRepo.isBadVersion(l):
+            return l 
+        else:
+            return r
+    
+    def search_left(self, seq):
+        if SVNRepo.isBadVersion(seq):
+            return True 
+        
+        return False

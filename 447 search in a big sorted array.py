@@ -25,3 +25,32 @@ class Solution:
         elif reader.get(right) == target:
             return right
         return -1
+
+class Solution2:
+    """
+    @param: reader: An instance of ArrayReader.
+    @param: target: An integer
+    @return: An integer which is the first index of target.
+    """
+    def searchBigSortedArray(self, reader, target):
+        times = 1 
+        while reader.get(times) < target:
+            times *= 2
+        
+        l = 0
+        r = times
+        
+        while l + 1 < r:
+            m = (l + r) // 2
+            if reader.get(m) > target:
+                r = m 
+            else:
+                l = m 
+        
+        if reader.get(r) == target:
+            return r  
+            
+        if reader.get(l) == target: 
+            return l 
+            
+        return -1

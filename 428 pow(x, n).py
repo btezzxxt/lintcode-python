@@ -30,3 +30,28 @@ class Solution:
 
 
 print(Solution().myPow(2, -2147483648))
+
+class Solution2:
+    """
+    @param x: the base number
+    @param n: the power number
+    @return: the result
+    """
+    def myPow(self, x, n):
+        if n == 0:
+            return 1 
+        elif n < 0:
+            return 1 / self.calc_pow(x, -n)
+        else:
+            return self.calc_pow(x, n)
+        
+    
+    def calc_pow(self, x, n):
+        if n == 0:
+            return 1
+                
+        half = self.calc_pow(x, n // 2)
+        if n % 2 == 1:
+            return half * half * x 
+        else:
+            return half * half

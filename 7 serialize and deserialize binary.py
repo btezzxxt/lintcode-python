@@ -65,3 +65,74 @@ class Solution:
             level_end_index += curLen * 2
         return root
 Solution().deserialize("123####")
+
+
+"""
+Definition of TreeNode:
+class TreeNode:
+    def __init__(self, val):
+        self.val = val
+        self.left, self.right = None, None
+"""
+
+# 第二个办法有点浪费空间
+from collections import deque
+class Solution2:
+    """
+    @param root: An object of TreeNode, denote the root of the binary tree.
+    This method will be invoked first, you should design your own algorithm 
+    to serialize a binary tree which denote by a root node to a string which
+    can be easily deserialized by your own "deserialize" method later.
+    """
+    def serialize(self, root):
+        # write your code here
+        serial = []
+        queue = deque([root])
+        while queue:
+            has_node = False
+            
+            for _ in range(len(queue)):
+                cur = queue.popleft()
+                if not cur:
+                    serial.append("#")
+                    queue.append(None)
+                    queue.append(None)
+                else:
+                    has_node = True
+                    serial.append(str(cur.val))
+                    queue.append(cur.left)
+                    queue.append(cur.right)
+            
+            if not has_node:
+                break
+            
+        temp = ",".join(serial)
+        return temp
+                    
+
+
+    """
+    @param data: A string serialized by your serialize method.
+    This method will be invoked second, the argument data is what exactly
+    you serialized at method "serialize", that means the data is not given by
+    system, it's given by your own serialize method. So the format of data is
+    designed by yourself, and deserialize it here as you serialize it in 
+    "serialize" method.
+    """
+    def deserialize(self, data):
+        # write your code here
+        arr = data.split(",")
+        root = self.construct(arr, 0)
+        return root
+        
+    def construct(self, data, index):
+        if index < len(data):
+            if data[index] == "#":
+                return None
+            else:
+                root = TreeNode(data[index])
+                root.left = self.construct(data, index * 2 + 1)
+                root.right = self.construct(data, index * 2 + 2)
+                return root
+        return None
+        

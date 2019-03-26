@@ -109,3 +109,46 @@ a.right = c
 b.left = d
 b.right = e
 print(Solution().kthSmallest(a, 3).val)
+
+"""
+Definition of TreeNode:
+class TreeNode:
+    def __init__(self, val):
+        self.val = val
+        self.left, self.right = None, None
+"""
+
+class Solution2:
+    """
+    @param root: the given BST
+    @param k: the given k
+    @return: the kth smallest element in BST
+    """
+    def kthSmallest(self, root, k):
+        # write your code here
+        num_map = {}
+        self.count_nodes(root, num_map)
+        node = self.get_kth(root, num_map, k)
+        return node.val
+        
+    def count_nodes(self, root, num_map):
+        if root == None:
+            return 0
+        
+        left_count = self.count_nodes(root.left, num_map)
+        right_count = self.count_nodes(root.right, num_map)
+        num_map[root] = left_count + right_count + 1 
+        return left_count + right_count + 1 
+
+    def get_kth(self, root, num_map, k):
+        left_count = 0
+        if root.left:
+            left_count = num_map[root.left]
+        if left_count >= k:
+            return self.get_kth(root.left, num_map, k)
+        elif left_count + 1 == k:
+            return root
+        else:
+            return self.get_kth(root.right, num_map, k - 1 - left_count)
+            
+        

@@ -44,3 +44,59 @@ class Solution:
                     # put in current copy's neighbor
                     curCopy.neighbors.append(copyN)
         return head
+
+"""
+Definition for a undirected graph node
+class UndirectedGraphNode:
+    def __init__(self, x):
+        self.label = x
+        self.neighbors = []
+"""
+
+# from collections import deque
+# class Solution:
+#     """
+#     @param: node: A undirected graph node
+#     @return: A undirected graph node
+#     """
+#     def cloneGraph(self, node):
+#         # write your code here
+#         if not node:
+#             return node
+        
+#         # old graph nodes status
+#         added = set()
+#         queue = deque([node])
+#         added.add(node.label)        
+        
+#         # new graph nodes status
+#         created = {}
+#         head = UndirectedGraphNode(node.label)
+#         created[head.label] = head
+        
+
+        
+#         while queue:
+#             old_cur = queue.popleft()
+#             new_cur = created[old_cur.label]
+            
+#             # adding neighbor for the cloned node
+#             for neighbor in old_cur.neighbors:
+#                 if neighbor.label not in created:
+#                     new_neighbor = UndirectedGraphNode(neighbor.label)
+#                     created[new_neighbor.label] = new_neighbor
+#                     new_cur.neighbors.append(new_neighbor)
+#                 else:
+#                     new_cur.neighbors.append(created[neighbor.label])
+                
+#                 # 如果这个neighbor还没有被添加过，放入queue并记录  
+#                 if neighbor.label not in added:
+#                     queue.append(neighbor)
+#                     added.add(neighbor.label)
+#         return head
+
+one = UndirectedGraphNode(1)
+two = UndirectedGraphNode(2)
+one.neighbors.append(two)
+two.neighbors.append(one)
+Solution().cloneGraph(one)

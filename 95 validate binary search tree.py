@@ -42,3 +42,51 @@ class Solution:
             return False, 0, 0
         
         return True, l_min, r_max
+
+class Solution2:
+    """
+    @param root: The root of binary tree.
+    @return: True if the binary tree is BST, or false
+    """
+    def isValidBST(self, root):
+        # write your code here
+        valid, _, _ = self.helper(root)
+        return valid
+    
+    def helper(self, root): 
+        if root == None:
+            return True, None, None
+        
+        # 最后处理叶子结点
+        left_valid, left_min, left_max = self.helper(root.left)
+        right_valid, right_min, right_max = self.helper(root.right)
+        
+        if not left_valid or not right_valid:
+            return False, None, None
+        
+        # left exists and right exists
+        if left_max and right_min:
+            if left_max.val < root.val and root.val < right_min.val:
+                return True, left_min, right_max
+            else:
+                return False, None, None
+        # only left exists
+        elif left_max:
+            if left_max.val < root.val:
+                return True, left_min, root
+            else:
+                return False, None, None
+        # only right exists
+        elif right_min:
+            if root.val < right_min.val:
+                return True, root, right_max
+            else:
+                return False, None, None
+        # leaf node
+        else:
+            return True, root, root
+        
+        
+        
+        
+            

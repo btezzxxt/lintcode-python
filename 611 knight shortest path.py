@@ -11,6 +11,7 @@ class Solution:
     @param destination: a point
     @return: the shortest path 
     """
+    # dijstra algorithm
     def shortestPath(self, grid, source, destination):
         # write your code here
         if len(grid) == 0 or len(grid[0]) == 0:

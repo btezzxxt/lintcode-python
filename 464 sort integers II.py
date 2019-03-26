@@ -92,3 +92,83 @@ class Solution:
     # heap sort
 
 print(Solution().sortIntegers2([3,2,1,4,5]))
+
+
+class Solution2:
+    """
+    @param A: an integer array
+    @return: nothing
+    """
+    def sortIntegers2(self, A):
+        # write your code here
+        arr = self.mergesort(A, 0, len(A) - 1)
+        for i in range(len(arr)):
+            A[i] = arr[i]
+    
+    def mergesort(self, A, l, r):
+        if l > r:
+            return []
+        
+        if l == r:
+            return [A[l]]
+        
+        mid = (l + r) // 2 
+        arr1 = self.mergesort(A, l, mid)
+        arr2 = self.mergesort(A, mid + 1, r)
+        arr = self.merge(arr1, arr2)
+        return arr
+        
+    def merge(self, arr1, arr2):
+        if not arr1:
+            return arr2
+        
+        if not arr2:
+            return arr1
+            
+        p1, p2 = 0, 0
+        
+        res = [] 
+        while p1 < len(arr1) and p2 < len(arr2):
+            if arr1[p1] <= arr2[p2]:
+                res.append(arr1[p1])
+                p1 += 1
+            else:
+                res.append(arr2[p2])
+                p2 += 1 
+            
+        while p1 < len(arr1):
+            res.append(arr1[p1])
+            p1 += 1 
+        
+        while p2 < len(arr2):
+            res.append(arr2[p2])
+            p2 += 1 
+        
+        return res
+        
+    def sortIntegers2_star(self, A):
+        # write your code here
+        self.quicksort(A, 0, len(A) - 1)
+        
+    def quicksort(self, A, start, end):
+        if start < end:
+            lower, upper = self.partition(A, start, end)
+            self.quicksort(A, start, lower)
+            self.quicksort(A, upper, end)
+    
+    def partition(self, A, start, end):
+        l = start
+        r = end
+        pivot = A[(start + end) // 2]
+        
+        while l <= r:
+            while l <= r and A[r] > pivot:
+                r -= 1 
+            while l <= r and A[l] < pivot:
+                l += 1 
+            
+            if l <= r:
+                A[l], A[r] = A[r], A[l]
+                l += 1 
+                r -= 1 
+        return r, l

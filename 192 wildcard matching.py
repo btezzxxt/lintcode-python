@@ -44,3 +44,40 @@ class Solution:
         return False
 
 print(Solution().isMatch("aa", "aa"))
+
+class Solution2:
+    """
+    @param s: A string 
+    @param p: A string includes "?" and "*"
+    @return: is Match?
+    """
+    def isMatch(self, s, p):
+        # write your code here
+        return self.dfs(s, p, {})
+        
+    def dfs(self, s, p, memo):
+        if len(s) == 0 and len(p) == 0:
+            return True
+        elif len(s) == 0:
+            if p == "*":
+                return True
+            else:
+                return False
+        elif len(p) == 0:
+            return False
+            
+        if (s, p) in memo:
+            return memo[(s, p)]
+        
+        char = p[0]
+        if char != '*':
+            res = self.char_match(s[0], char) and self.dfs(s[1:], p[1:], memo)
+        else:
+            res = self.dfs(s[1: ], p, memo) or self.dfs(s, p[1: ], memo)
+            
+        memo[(s, p)] = res    
+        return res
+            
+    def char_match(self, c1, c2):
+        return c1 == c2 or c2 == "?" or c2 == "*"
+            

@@ -34,3 +34,35 @@ class Solution:
             return False
 
 print(Solution().isPalindrome('ab'))
+
+import re
+class Solution2:
+    """
+    @param s: A string
+    @return: Whether the string is a valid palindrome
+    """
+    def isPalindrome(self, s):
+        # write your code here
+        if s == "":
+            return True
+        
+        l = 0 
+        r = len(s) - 1 
+        while l < r:
+            while l < r and not self.valid_letter(s[l]):
+                l += 1 
+            while l < r and not self.valid_letter(s[r]):
+                r -= 1 
+            if l < r:
+                if s[l].lower() != s[r].lower():
+                    return False
+                else:
+                    l += 1 
+                    r -= 1 
+        
+        return True 
+        
+    def valid_letter(self, letter):
+        if re.match(r"\w", letter):
+            return True
+        return False

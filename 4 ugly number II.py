@@ -8,14 +8,18 @@ class Solution:
     def nthUglyNumber(self, n):
         # write your code here
         heap = []
-        visited = set([1])
         heappush(heap, 1)
-        cur = -1
-        for _ in range(n):
+        visited = set()
+        
+        count = 0
+        while heap:
             cur = heappop(heap)
-            for mul in [2, 3, 5]:
-                new = cur * mul
-                if new not in visited:
-                    visited.add(new)
-                    heappush(heap, new)
-        return cur
+            count += 1
+            if count == n:
+                return cur
+            for mul in [2,3,5]:
+                temp = cur * mul
+                if temp not in visited:
+                    heappush(heap, temp)
+                    visited.add(temp)
+        return -1

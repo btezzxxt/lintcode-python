@@ -1,4 +1,4 @@
-class Solution:
+class Solution2:
     """
     @param pattern: a string,denote pattern string
     @param str: a string, denote matching string
@@ -33,3 +33,48 @@ class Solution:
         return False
 
 print(Solution().wordPatternMatch("d", "ed"))
+
+
+class Solution:
+    """
+    @param pattern: a string,denote pattern string
+    @param str: a string, denote matching string
+    @return: a boolean
+    """
+    def wordPatternMatch(self, pattern, str):
+        # write your code here
+        return self.dfs(pattern, str, {}, set())
+        
+    # 用pattern map来确认pattern对应的字符串
+    # 用used来确保一个str子串只能对应一个pattern
+    def dfs(self, pattern, str, pattern_map, used):
+        if str == "" and pattern == "":
+            return True
+        elif str == "":
+            return False
+        elif pattern == "":
+            return False
+        
+        p = pattern[0]
+        if p not in pattern_map:
+            for i in range(len(str)):
+                match_str = str[: i + 1]
+                if match_str in used:
+                    continue
+                pattern_map[p] = match_str
+                used.add(match_str)
+                if self.dfs(pattern[1:], str[i + 1:], pattern_map, used):
+                    return True
+                del pattern_map[p]
+                used.remove(match_str)
+            return False
+        else:
+            match_str = pattern_map[p]
+            if str.startswith(match_str):
+                return self.dfs(pattern[1:], str[len(match_str):], pattern_map, used)
+            else:
+                return False
+            
+        
+        
+print(Solution().wordPatternMatch("aaaa", "dogdogdogdog"))

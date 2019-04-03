@@ -37,27 +37,29 @@ class Solution:
     @return: all permutations
     """
     def stringPermutation2(self, str):
+        # write your code here
+        str_arr = list(str)
+        str_arr.sort()
         res = []
-        self.dfs(str, [], res, set())
-        return 
-    
-    def dfs(self, str, path, res, used_index):
-        if len(used_index) == len(str):
-            res.append(path[::])
+        self.dfs(str_arr, res, [], set())
+        return res
+
+    def dfs(self, str_arr, res, path, visited_i):
+        if len(path) == len(str_arr):
+            res.append("".join(path))
             return 
-
-        for i in range(len(str)):
-            if i != 0 and str[i] == str[i - 1] and i - 1 not in used_index:
-                continue
-
-            if i not in used_index:
-                cur = str[i]
-                path.append(cur)
-                used_index.add(i)
-                self.dfs(str, path, res, used_index)
-                path.pop()
-                used_index.remove(i)
-    
-
         
+        for i in range(len(str_arr)):
+            if i in visited_i:
+                continue
+            
+            if i > 0 and str_arr[i] == str_arr[i - 1] and i - 1 not in visited_i:
+                continue
+            
+            path.append(str_arr[i])
+            visited_i.add(i)
+            self.dfs(str_arr, res, path, visited_i)
+            visited_i.remove(i)
+            path.pop()
+
         

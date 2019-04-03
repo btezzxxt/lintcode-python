@@ -48,3 +48,58 @@ class Solution:
         return results
 
 print(Solution().solveNQueens(1))
+
+from copy import deepcopy
+class Solution2:
+    """
+    @param: n: The number of queens
+    @return: All distinct solutions
+    """
+    def solveNQueens(self, n):
+        # write your code here
+        if n == 0:
+            return []
+        
+        board = [['.' for i in range(n)] for i in range(n)]
+        
+        res = []
+        col = []
+        self.dfs(n, col, set(), res)
+        paintings = self.draw(board, res)
+
+        return paintings 
+            
+            
+    def dfs(self, n, col, visited, res):
+        if len(col) == n:
+            res.append(col[::])
+            return 
+        
+        for i in range(n):
+            if i not in visited and self.not_conflict(col, i):
+                col.append(i)
+                visited.add(i)
+                self.dfs(n, col, visited, res)
+                visited.remove(i)
+                col.pop()
+                
+    def draw(self, board, res):
+        group = []
+        for col in res:
+            newboard = deepcopy(board)
+            for i in range(len(col)):
+                newboard[i][col[i]] = 'Q'
+                matrix = []
+                for i in range(len(board)):
+                    matrix.append("".join(newboard[i]))                
+            group.append(matrix)
+        return group
+            
+    def not_conflict(self, col, j):
+        i = len(col)
+        for x, y in enumerate(col):
+            if x - y == i - j or x + y == i + j:
+                return False
+        return True
+#print(Solution2().solveNQueens(3))
+Solution2().not_conflict([1], 2)

@@ -41,3 +41,45 @@ class Solution:
 
         return max_gap
         
+
+class Solution:
+    """
+    @param matrix: the given matrix
+    @return: the largest possible sum
+    """
+    def maxSubmatrix(self, matrix):
+        # write your code here
+        if not matrix or not matrix[0]:
+            return 0
+        
+        m = len(matrix)
+        n = len(matrix[0])
+
+        sum_arr = [[0 for i in range(n)] for i in range(m + 1)]
+    
+        for i in range(1, m + 1):
+            for j in range(n):
+                sum_arr[i][j] = sum_arr[i-1][j] + matrix[i - 1][j]
+        print(sum_arr)
+
+        maxi = -sys.maxsize
+        for i in range(1, m + 1):
+            for j in range(i, m + 1):
+                compressed = []
+                for k in range(n):
+                    compressed.append(sum_arr[j][k] - sum_arr[i - 1][k])
+                
+                maxi = max(maxi, self.max_subarray(compressed))
+                
+        return maxi
+
+    def max_subarray(self, array):
+        n = len(array)
+        dp = [-sys.maxsize] * 2
+        maxi = -sys.maxsize
+        for i in range(1, n + 1):
+            dp[i % 2] = max(dp[(i - 1) % 2] + array[i - 1], array[i - 1])
+            maxi = max(maxi, dp[i % 2])
+        return maxi
+    
+                

@@ -153,13 +153,18 @@ class LRUCache:
             self.cache[node.next.key] = pre
 
             self.tail.next = node
+            node.next = None
             self.cache[node.key] = self.tail
             self.tail = node
-            
-a = LRUCache(1)
-a.set(2, 1)
-print(a.get(2))
-a.set(3, 2)
-print(a.get(2))
-print(a.get(3))
-
+           
+a = LRUCache(10)
+a.set(48, 261)
+a.set(3, 193)
+a.set(133, 193)
+a.set(60, 183)
+a.set(128, 148)
+a.set(52, 176)
+a.get(48)
+a.set(48, 119)
+a.set(10, 241)
+a.set(130, 127)

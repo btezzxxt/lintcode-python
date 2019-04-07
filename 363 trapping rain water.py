@@ -10,11 +10,6 @@ class Solution:
         
         l = 0
         r = len(heights) - 1
-        # while l < len(heights) and heights[l] <= 0:
-        #     l += 1
-
-        # while r >= 0 and heights[r] <= 0:
-        #     r -= 1
 
         sumVal = 0
         while l < r:

@@ -172,3 +172,6 @@ class Solution2:
                 l += 1 
                 r -= 1 
         return r, l
+
+
+print(Solution2().partition([3,1,3,1,3], 0, 4))

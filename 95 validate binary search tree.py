@@ -89,4 +89,53 @@ class Solution2:
         
         
         
-            
+class Solution:
+    # def isValidBST(self, root):
+    #     valid, _, _ = self.dfs(root)
+    #     return valid
+    
+    # #@ return is valid, smallest, biggest
+    # def dfs(self, root):
+    #     if not root:
+    #         return True, None, None
+        
+    #     if not root.left and not root.right:
+    #         return True, root.val, root.val
+        
+    #     left_valid, left_small, left_big = self.dfs(root.left)
+    #     right_valid, right_small, right_big = self.dfs(root.right)
+
+    #     if left_valid and right_valid:
+    #         if (not left_big or left_big < root.val) and (not right_small or root.val < right_small):
+    #             left_val = left_small if left_small else root.val
+    #             right_val = right_big if right_big else root.val 
+    #             return True, left_val, right_val 
+    #     return False, None, None
+
+    def isValidBST(self, root):
+        if not root:
+            return True 
+        
+        stack = []
+        while root:
+            stack.append(root)
+            root = root.left 
+
+        pre = None 
+        while stack:
+            node = stack.pop()
+            if pre != None and node.val <= pre.val:
+                return False
+
+            if node.right:
+                cur = node.right
+                while cur:
+                    stack.append(cur)
+                    cur = cur.left 
+            else:
+                cur = node
+                while stack and stack[-1].right == cur:
+                    cur = stack.pop()
+            pre = node
+
+        return True

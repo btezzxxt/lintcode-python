@@ -95,6 +95,54 @@ class UndirectedGraphNode:
 #                     added.add(neighbor.label)
 #         return head
 
+"""
+Definition for a undirected graph node
+class UndirectedGraphNode:
+    def __init__(self, x):
+        self.label = x
+        self.neighbors = []
+"""
+
+from collections import deque
+class Solution:
+    """
+    @param: node: A undirected graph node
+    @return: A undirected graph node
+    """
+    def cloneGraph(self, node):
+        # write your code here
+        if not node:
+            return None
+
+        nodes = self.bfs(node)
+        
+        mapping = {}
+        for node_org in nodes:
+            mapping[node_org] = UndirectedGraphNode(node_org.label) 
+        
+        for node_org in nodes:
+            node_copy = mapping[node_org]
+            for nb in node_org.neighbors:
+                nb_copy = mapping[nb]
+                node_copy.neighbors.append(nb_copy)
+        return mapping[node]
+    
+    def bfs(self, node):
+        queue = deque([node])
+        visited = set([node])
+        
+        nodes = [] 
+        while queue:
+            cur = queue.popleft()
+            nodes.append(cur)
+            for nb in cur.neighbors:
+                if nb not in visited:
+                    queue.append(nb)
+                    visited.add(nb)
+        return nodes
+        
+        
+        
 one = UndirectedGraphNode(1)
 two = UndirectedGraphNode(2)
 one.neighbors.append(two)

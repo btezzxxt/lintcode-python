@@ -129,4 +129,61 @@ class WordDictionary:
                             return True
                     return False
 
+# bfs
+class TrieNode2:
+    def __init__(self):
+        self.children = {}
+        self.has_word = False
+
+from collections import deque
+class WordDictionary2:
+    """
+    @param: word: Adds a word into the data structure.
+    @return: nothing
+    """
+    def __init__(self):
+        self.root = TrieNode()
         
+
+    def addWord(self, word):
+        # write your code here
+        cur = self.root
+        for char in word:
+            if char not in cur.children:
+                cur.children[char] = TrieNode()
+            cur = cur.children[char]
+        cur.has_word = True
+
+    """
+    @param: word: A word could contain the dot character '.' to represent any one letter.
+    @return: if the word is in the data structure.
+    """
+    def search(self, word):
+        # write your code here
+        queue = deque([self.root])
+        i = 0 
+        while queue:
+            if i == len(word):
+                break
+            
+            char = word[i]
+            for _ in range(len(queue)):
+                cur = queue.popleft()
+                if char == ".":
+                    for node in cur.children.values():
+                        queue.append(node)
+                else:
+                    if char in cur.children:
+                        queue.append(cur.children[char])
+            i = i + 1 
+            
+        if i < len(word):
+            return False
+        
+        while queue:
+            cur = queue.popleft()
+            if cur.has_word:
+                return True 
+        return False
+        
+                        

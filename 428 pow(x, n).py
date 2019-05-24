@@ -55,3 +55,32 @@ class Solution2:
             return half * half * x 
         else:
             return half * half
+
+
+class Solution2:
+    """
+    @param x: the base number
+    @param n: the power number
+    @return: the result
+    """
+    def myPow(self, x, n):
+        if n == 0:
+            return 1
+        elif n < 0:
+            return 1 / self.calc(x, -n)
+        else:
+            return self.calc(x, n)
+    
+    def calc(self, x, n):
+        # later
+        if n == 0:
+            return 1 
+        
+        half = self.calc(x, n // 2)
+        if n % 2 == 0:
+            return half * half 
+        else:
+            return half * half * x
+        
+
+print(Solution2().myPow(8.84372, -5))

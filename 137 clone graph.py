@@ -5,45 +5,45 @@ class UndirectedGraphNode:
         self.label = x
         self.neighbors = []
 
-from collections import deque
-class Solution:
-    """
-    @param: node: A undirected graph node
-    @return: A undirected graph node
-    """
-    def cloneGraph(self, node):
-        # write your code here
-        if not node:
-            return node
+# from collections import deque
+# class Solution:
+#     """
+#     @param: node: A undirected graph node
+#     @return: A undirected graph node
+#     """
+#     def cloneGraph(self, node):
+#         # write your code here
+#         if not node:
+#             return node
 
-        copied = {}
+#         copied = {}
 
-        queue = deque([node])
-        head = UndirectedGraphNode(node.label)
-        copied[head.label] = head
+#         queue = deque([node])
+#         head = UndirectedGraphNode(node.label)
+#         copied[head.label] = head
 
-        while queue:
-            cur = queue.popleft()
-            curCopy = copied[cur.label]
+#         while queue:
+#             cur = queue.popleft()
+#             curCopy = copied[cur.label]
            
-            for neighbor in cur.neighbors:
-                # point to self, just add self to self neightbor, then continue
-                if neighbor.label == curCopy.label:
-                    curCopy.neighbors.append(curCopy)
-                else:
-                    # if neighbor is a new node, create and add the map
-                    if neighbor.label not in copied:
-                        copyN = UndirectedGraphNode(neighbor.label)
-                        copied[copyN.label] = copyN
-                        # add non-self new neighbor to queue waiting for process                        
-                        queue.append(neighbor)                        
-                    # if neighbor was created, get if from map
-                    else:
-                        copyN = copied[neighbor.label]
+#             for neighbor in cur.neighbors:
+#                 # point to self, just add self to self neightbor, then continue
+#                 if neighbor.label == curCopy.label:
+#                     curCopy.neighbors.append(curCopy)
+#                 else:
+#                     # if neighbor is a new node, create and add the map
+#                     if neighbor.label not in copied:
+#                         copyN = UndirectedGraphNode(neighbor.label)
+#                         copied[copyN.label] = copyN
+#                         # add non-self new neighbor to queue waiting for process                        
+#                         queue.append(neighbor)                        
+#                     # if neighbor was created, get if from map
+#                     else:
+#                         copyN = copied[neighbor.label]
 
-                    # put in current copy's neighbor
-                    curCopy.neighbors.append(copyN)
-        return head
+#                     # put in current copy's neighbor
+#                     curCopy.neighbors.append(copyN)
+#         return head
 
 """
 Definition for a undirected graph node
@@ -111,40 +111,30 @@ class Solution:
     """
     def cloneGraph(self, node):
         # write your code here
+        
         if not node:
-            return None
-
-        nodes = self.bfs(node)
+            return None 
+        org_clone = {node: UndirectedGraphNode(node.label)}
         
-        mapping = {}
-        for node_org in nodes:
-            mapping[node_org] = UndirectedGraphNode(node_org.label) 
-        
-        for node_org in nodes:
-            node_copy = mapping[node_org]
-            for nb in node_org.neighbors:
-                nb_copy = mapping[nb]
-                node_copy.neighbors.append(nb_copy)
-        return mapping[node]
-    
-    def bfs(self, node):
         queue = deque([node])
-        visited = set([node])
-        
-        nodes = [] 
         while queue:
             cur = queue.popleft()
-            nodes.append(cur)
             for nb in cur.neighbors:
-                if nb not in visited:
+                if nb not in org_clone:
+                    org_clone[nb] = UndirectedGraphNode(nb.label)
                     queue.append(nb)
-                    visited.add(nb)
-        return nodes
         
+        for node, clone in org_clone.items():
+            for nb in node.neighbors:
+                clone.neighbors.append(org_clone[nb])
+        return org_clone[node]
         
-        
+z = UndirectedGraphNode(0)
 one = UndirectedGraphNode(1)
 two = UndirectedGraphNode(2)
+
+z.neighbors.append(one)
+z.neighbors.append(two)
 one.neighbors.append(two)
-two.neighbors.append(one)
-Solution().cloneGraph(one)
+two.neighbors.append(two)
+Solution().cloneGraph(z)
